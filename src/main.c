@@ -5,15 +5,22 @@ typedef struct
 	char** map;
 	int height;
 	int width;
+
+	int coins;
+	int player;
+	int exit;
 }map;
 
-map read_map(map m)
+map map_read_check(map m, char* name)
 {
 	int		fd;
 	char	*line;
-	fd = open("map", O_RDONLY);
+	fd = open(name, O_RDONLY);
 	if (fd == -1)
+	{
+		ft_printf("Can't find \"%s\"\n", name);		
 		exit(-1);
+	}
 	else
 	{
 		while ((line = get_next_line(fd)) != NULL)
@@ -36,15 +43,18 @@ char** map_init(map dimentions)
 	return(map_malloc);
 }
 
-int map_copy(char** map)
+int map_copy(char** map, char* name)
 {
 	int		fd;
 	char	*line;
 	int	i;
-	fd = open("map", O_RDONLY);
+	fd = open(name, O_RDONLY);
 	i = 0;
 	if (fd == -1)
+	{
+		ft_printf("Can't find %s\n", name);		
 		return(-1);
+	}
 	else
 	{
 		while ((line = get_next_line(fd)) != NULL)
@@ -54,18 +64,8 @@ int map_copy(char** map)
 		}
 	}
 	close(fd);
+	ft_printf("Map stored succesfully!\n");
 	return (1);
-}
-
-void print_map(char **map, int height, int width) {
-    // Iterate over each row
-    for (int i = 0; i < height; i++) {
-        // Print each string in the row (each map[i] is a string)
-        for (int j = 0; j < width; j++) {
-            // Print the character at map[i][j]
-            ft_putchar(map[i][j]);
-        }
-    }
 }
 
 int wall_check(map data)
@@ -89,20 +89,68 @@ int wall_check(map data)
 			return(-1);
 		j++;
 	}
+	ft_printf("Walls: OK!\n");
 	return(1);
 }
 
-int main()
+int extention_check(int argc, char** argv)
 {
-	map dimensions = {NULL,0,0};
-	dimensions = read_map(dimensions);
+	if(argc != 2)
+	{
+		ft_printf("Usage: ./Game map.ber\n");
+    		return(-1);
+	}
+	int count = strlen(argv[1]);
+	if(ft_strncmp(&argv[1][count-4],".ber",4) == 0)
+	{
+		ft_printf("Correct extention\n");
+		return(0);
+	}
+	printf("Incorrect extention\n");
+	return( -1);
+}
+
+int content_check(map *data)
+{
+	int i;
+	int j;
+
+	i = 0;
+while(++i < (data->height - 1))
+{
+	j = 0;
+	while(++j < (data->width - 2))
+	{
+		if(data->map[i][j] == '0' || data->map[i][j] == '1')
+			continue;
+		else if(data->map[i][j] == 'c')
+			data->coins = data->coins + 1;
+		else if(data->map[i][j] == 'p')
+			data->player = data->player + 1;
+			else if(data->map[i][j] == 'e')
+				data->exit = data->exit + 1;
+			else
+				return(-1);
+		}
+	}	
+	if(data->exit > 1 || data->player > 1 || data->coins < 1)
+		return(-1);
+	ft_printf("Content: OK!\nCoins: %d\nPlayer: %d\nExit: %d\n", data->coins, data->player, data->exit);
+	return(0);
+}
+
+int main(int argc, char** argv)
+{
+	if(extention_check(argc, argv) == -1)
+		return(1);
+	map dimensions = {NULL,0,0,0,0,0};
+	dimensions = map_read_check(dimensions, argv[1]);
 	dimensions.map = map_init(dimensions); 
-	if(0 < map_copy(dimensions.map))
-		ft_printf("Map stored succesfully!\n");
-	else
-		ft_printf("Map copy falied!\n");
-	//print_map(dimensions.map, dimensions.height, dimensions.width);
+	if(map_copy(dimensions.map, argv[1]) == -1)
+		return(2);
 	if(wall_check(dimensions) == -1)
-		return(2); //to check exit status "echo $?"
+		return(3); //to check exit status "echo $?"
+	if(content_check(&dimensions) == -1)
+		return(4);
 	return(0);
 }

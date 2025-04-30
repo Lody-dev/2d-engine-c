@@ -12,6 +12,9 @@ typedef struct
 
 	int p_x;
 	int p_y;
+	
+	int cur_exit;
+	int cur_coins;
 }map;
 
 map map_read_check(map m, char* name)
@@ -161,16 +164,34 @@ void get_player_position(map* data)
 	}
 	ft_printf("Player position: X -> %d   Y -> %d\n", data->p_x, data->p_y);	
 }
-/*int reachable_check(map data)
+
+int reachable_check(map* data, int x, int y)
 {
-		
-}*/
+	if (x < 0 || y < 0 || x >= data->height || y >= data->width)
+		return -1;
+	if (data->map[x][y] == '1')
+		return -2;
+	if (data->cur_coins == data->coins && data->cur_exit == 1)
+        	return 1;
+
+	if (data->map[x][y] == 'c')
+        	data->cur_coins++;
+	
+	if (data->map[x][y] == 'e')
+		data->cur_exit++;
+//	data->map[x][y] = '1';  
+	if (reachable_check(data, x + 1, y) == 1) return 1;
+	if (reachable_check(data, x - 1, y) == 1) return 1;
+	if (reachable_check(data, x, y + 1) == 1) return 1;
+	if (reachable_check(data, x, y - 1) == 1) return 1;	
+	return -3;
+}
 
 int main(int argc, char** argv)
 {
 	if(extention_check(argc, argv) == -1)
 		return(1);
-	map dimensions = {NULL,0,0,0,0,0,0,0};
+	map dimensions = {NULL,0,0,0,0,0,0,0,0,0};
 	dimensions = map_read_check(dimensions, argv[1]);
 	dimensions.map = map_init(dimensions); 
 	if(map_copy(dimensions.map, argv[1]) == -1)
@@ -180,7 +201,7 @@ int main(int argc, char** argv)
 	if(content_check(&dimensions) == -1)
 		return(4);
 	get_player_position(&dimensions);
-	//if(reachable_check(dimensions) == -1)
-	//	return(5);
-	return(0);
+	if(reachable_check(&dimensions, dimensions.p_x, dimensions.p_y) == -1)
+		return(5);
+	ft_printf("Exit status %d\n" , reachable_check(&dimensions, dimensions.p_x, dimensions.p_y));
 }

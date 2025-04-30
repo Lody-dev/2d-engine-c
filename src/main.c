@@ -9,6 +9,9 @@ typedef struct
 	int coins;
 	int player;
 	int exit;
+
+	int p_x;
+	int p_y;
 }map;
 
 map map_read_check(map m, char* name)
@@ -116,17 +119,17 @@ int content_check(map *data)
 	int j;
 
 	i = 0;
-while(++i < (data->height - 1))
-{
-	j = 0;
-	while(++j < (data->width - 2))
+	while(++i < (data->height - 1))
 	{
-		if(data->map[i][j] == '0' || data->map[i][j] == '1')
-			continue;
-		else if(data->map[i][j] == 'c')
-			data->coins = data->coins + 1;
-		else if(data->map[i][j] == 'p')
-			data->player = data->player + 1;
+		j = 0;
+		while(++j < (data->width - 2))
+		{
+			if(data->map[i][j] == '0' || data->map[i][j] == '1')
+				continue;
+			else if(data->map[i][j] == 'c')
+				data->coins = data->coins + 1;
+			else if(data->map[i][j] == 'p')
+				data->player = data->player + 1;
 			else if(data->map[i][j] == 'e')
 				data->exit = data->exit + 1;
 			else
@@ -138,12 +141,36 @@ while(++i < (data->height - 1))
 	ft_printf("Content: OK!\nCoins: %d\nPlayer: %d\nExit: %d\n", data->coins, data->player, data->exit);
 	return(0);
 }
+void get_player_position(map* data)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while(++i < (data->height - 1))
+	{
+		j = 0;
+		while(++j < (data->width - 2))
+		{
+			if(data->map[i][j] == 'p')
+			{			
+				data->p_x = j;
+				data->p_y = i;
+			}
+		}
+	}
+	ft_printf("Player position: X -> %d   Y -> %d\n", data->p_x, data->p_y);	
+}
+/*int reachable_check(map data)
+{
+		
+}*/
 
 int main(int argc, char** argv)
 {
 	if(extention_check(argc, argv) == -1)
 		return(1);
-	map dimensions = {NULL,0,0,0,0,0};
+	map dimensions = {NULL,0,0,0,0,0,0,0};
 	dimensions = map_read_check(dimensions, argv[1]);
 	dimensions.map = map_init(dimensions); 
 	if(map_copy(dimensions.map, argv[1]) == -1)
@@ -152,5 +179,8 @@ int main(int argc, char** argv)
 		return(3); //to check exit status "echo $?"
 	if(content_check(&dimensions) == -1)
 		return(4);
+	get_player_position(&dimensions);
+	//if(reachable_check(dimensions) == -1)
+	//	return(5);
 	return(0);
 }

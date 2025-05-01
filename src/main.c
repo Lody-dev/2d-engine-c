@@ -206,12 +206,26 @@ int dfs(map *data, int x, int y)
 	return (-1);
 }
 
+void free_copy(map* data)
+{
+	int i;
+	
+	i = -1;
+	while(++i < data->height)
+		free(data->map_copy[i]);
+	free(data->map_copy);
+	i = -1;	
+	while(++i < data->height)
+		free(data->map[i]);
+	free(data->map);
+}
+
 int main(int argc, char** argv)
 {
 	if(extention_check(argc, argv) == -1)
 		return(1);
 	
-	map dimensions = {NULL,NULL,0,0,0,0,0,0,0,0,0};
+	static map dimensions;
 	
 	dimensions = map_read_check(dimensions, argv[1]);
 	
@@ -228,6 +242,7 @@ int main(int argc, char** argv)
 		return (6);
 	if(dfs(&dimensions, dimensions.p_x, dimensions.p_y) == -1)
 		return(7);
+	free_copy(&dimensions);
 	ft_printf("Map valid!\n");
 	return(0);
 }

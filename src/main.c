@@ -44,13 +44,15 @@ map map_read_check(map m, char* name)
 	return (m);
 }
 
-char** map_init(map dimentions)
+int map_init(map *data)
 {
-	char** map_malloc = malloc(dimentions.height * sizeof(char *));
-	if (map_malloc == NULL)
-		exit(1);
-	
-	return(map_malloc);
+	data->map = malloc(data->height * sizeof(char *));
+	if (data->map == NULL)
+		return(-1);
+	data->map_copy = malloc(data->height * sizeof(char *));
+	if (data->map_copy == NULL)
+		return(-1);
+	return(1);
 }
 
 int get_map(char** map, char* name)
@@ -77,23 +79,19 @@ int get_map(char** map, char* name)
 	ft_printf("Map stored succesfully!\n");
 	return (1);
 }
-/*
-int get_map_copy(char** map_copy, map* data)
+
+int get_map_copy(map* data)
 {
 	int i;
 	
 	i = -1;
-	data->map_copy = malloc(data->height * sizeof(char *));
-	if (data->map_copy == NULL)
-		return(-1);
+	
 	while(++i < data->height)
-	{
-		data->map_copy[i] = data->map[i];
-	}
+		data->map_copy[i] = ft_strdup(data->map[i]);//strdup uses malloc!! FREE ME PLEASE!!!
 				
 	return(1);
 }
-*/
+
 int wall_check(map data)
 {
 	//Last character is indeed a '/n', so read and check untill pre-last char.
@@ -187,17 +185,17 @@ void get_player_position(map* data)
 
 int dfs(map *data, int x, int y)
 {
-	if (x < 0 || y < 0 || data->map[y] == 0 || data->map[y][x] == 0)
+	if (x < 0 || y < 0 || data->map_copy[y] == 0 || data->map_copy[y][x] == 0)
 		return -1; 
-	if (data->map[y][x] == 'c')
+	if (data->map_copy[y][x] == 'c')
 		data->cur_coins++;
-	if (data->map[y][x] == 'e')
+	if (data->map_copy[y][x] == 'e')
 		data->cur_exit++;
-	if(data->map[y][x] == '1')
+	if(data->map_copy[y][x] == '1')
 		return -1;
 	else
 	{
-		data->map[y][x] = '1';
+		data->map_copy[y][x] = '1';
 		dfs(data, x + 1, y);
 		dfs(data, x - 1, y);
 		dfs(data, x, y + 1);
@@ -212,18 +210,24 @@ int main(int argc, char** argv)
 {
 	if(extention_check(argc, argv) == -1)
 		return(1);
+	
 	map dimensions = {NULL,NULL,0,0,0,0,0,0,0,0,0};
+	
 	dimensions = map_read_check(dimensions, argv[1]);
-	dimensions.map = map_init(dimensions); 
-	if(get_map(dimensions.map, argv[1]) == -1)
+	
+	if(map_init(&dimensions) == -1)
 		return(2);
+	if(get_map(dimensions.map, argv[1]) == -1)
+		return(3);
 	if(wall_check(dimensions) == -1)
-		return(3); //to check exit status "echo $?"
+		return(4); //to check exit status "echo $?"
 	if(content_check(&dimensions) == -1)
-		return(4);
-	get_player_position(&dimensions);
-	if(dfs(&dimensions, dimensions.p_x, dimensions.p_y) == -1)
 		return(5);
+	get_player_position(&dimensions);
+	if(get_map_copy(&dimensions) == -1)//FREE ME PLEASE!	
+		return (6);
+	if(dfs(&dimensions, dimensions.p_x, dimensions.p_y) == -1)
+		return(7);
 	ft_printf("Map valid!\n");
 	return(0);
 }

@@ -23,9 +23,13 @@ $(NAME): $(OBJS)
 	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
+	@make clean -C $(LIBFT)
+	@rm $(LIBFT)/*.a
 	@rm -rf $(OBJS)
 	@rm -rf $(LIBMLX)/build
 
 fclean: clean
 	@rm -rf $(NAME)
 
+re:	fclean
+	make

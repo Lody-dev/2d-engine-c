@@ -6,7 +6,7 @@
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/02 16:41:36 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:34:05 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"
@@ -43,10 +43,10 @@ map	map_read_check(map m, char *name)
 
 int	map_init(map *data)
 {
-	data->map = malloc(data->height * sizeof(char *));
+	data->map = calloc(1, data->height * sizeof(char *));
 	if (data->map == NULL)
 		return (-1);
-	data->map_copy = malloc(data->height * sizeof(char *));
+	data->map_copy = calloc(1, data->height * sizeof(char *));
 	if (data->map_copy == NULL)
 		return (-1);
 	return (1);
@@ -90,7 +90,7 @@ int	get_map_copy(map *data)
 	return (1);
 }
 
-void	free_copy(map *data)
+void	free_map(map *data, int flag)
 {
 	int	i;
 
@@ -98,8 +98,13 @@ void	free_copy(map *data)
 	while (++i < data->height)
 		free(data->map_copy[i]);
 	free(data->map_copy);
-	i = -1;
-	while (++i < data->height)
-		free(data->map[i]);
-	free(data->map);
+	if (flag == -1)
+	{
+		i = -1;
+		while (++i < data->height)
+			free(data->map[i]);
+		free(data->map);
+		ft_printf("Error\n");
+		exit(1);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/02 16:12:30 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:50:20 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"
@@ -19,15 +19,15 @@ int	wall_check(map data)
 
 	i = 0;
 	j = 0;
-	while (i < data.width - 2)
+	while (i < data.width - 1)
 	{
-		if ((data.map[0][i] != '1') && (data.map[data.height - 1][i] != '1'))
+		if ((data.map[0][i] != '1') || (data.map[data.height - 1][i] != '1'))
 			return (-1);
 		i++;
 	}
 	while (j < data.height - 1)
 	{
-		if (data.map[j][0] != '1' && data.map[j][data.width - 2] != '1')
+		if (data.map[j][0] != '1' || data.map[j][data.width - 2] != '1')
 			return (-1);
 		j++;
 	}
@@ -67,11 +67,11 @@ int	content_check(map *data)
 		{
 			if (data->map[i][j] == '0' || data->map[i][j] == '1')
 				continue ;
-			else if (data->map[i][j] == 'c')
+			else if (data->map[i][j] == 'C')
 				data->coins = data->coins + 1;
-			else if (data->map[i][j] == 'p')
+			else if (data->map[i][j] == 'P')
 				data->player = data->player + 1;
-			else if (data->map[i][j] == 'e')
+			else if (data->map[i][j] == 'E')
 				data->exit = data->exit + 1;
 			else
 				return (-1);
@@ -94,7 +94,7 @@ void	get_player_position(map *data)
 		j = 0;
 		while (++j < (data->width - 2))
 		{
-			if (data->map[i][j] == 'p')
+			if (data->map[i][j] == 'P')
 			{
 				data->p_x = j;
 				data->p_y = i;
@@ -108,9 +108,9 @@ int	dfs(map *data, int x, int y)
 {
 	if (x < 0 || y < 0 || data->map_copy[y] == 0 || data->map_copy[y][x] == 0)
 		return (-1);
-	if (data->map_copy[y][x] == 'c')
+	if (data->map_copy[y][x] == 'C')
 		data->cur_coins++;
-	if (data->map_copy[y][x] == 'e')
+	if (data->map_copy[y][x] == 'E')
 		data->cur_exit++;
 	if (data->map_copy[y][x] == '1')
 		return (-1);

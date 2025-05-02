@@ -6,7 +6,7 @@
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/02 16:14:42 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:45:48 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"
@@ -14,25 +14,28 @@
 
 int	main(int argc, char **argv)
 {
-	static map	dimensions;
+	static map	data;
 
 	if (extention_check(argc, argv) == -1)
 		return (1);
-	dimensions = map_read_check(dimensions, argv[1]);
-	if (map_init(&dimensions) == -1)
-		return (2);
-	if (get_map(dimensions.map, argv[1]) == -1)
-		return (3);
-	if (wall_check(dimensions) == -1)
-		return (4);
-	if (content_check(&dimensions) == -1)
-		return (5);
-	get_player_position(&dimensions);
-	if (get_map_copy(&dimensions) == -1)
-		return (6);
-	if (dfs(&dimensions, dimensions.p_x, dimensions.p_y) == -1)
-		return (7);
-	free_copy(&dimensions);
+	data = map_read_check(data, argv[1]);
+	if (map_init(&data) == -1)
+		free_map(&data, -1);
+	if (get_map(data.map, argv[1]) == -1)
+		free_map(&data, -1);
+	if (wall_check(data) == -1)
+		free_map(&data, -1);
+	if (content_check(&data) == -1)
+		free_map(&data, -1);
+	get_player_position(&data);
+	if (get_map_copy(&data) == -1)
+		free_map(&data, -1);
+	if (dfs(&data, data.p_x, data.p_y) == -1)
+		free_map(&data, -1);
 	ft_printf("Map valid!\n");
+	free_map(&data, 0);
 	return (0);
 }
+//Leaks free, BUT if map is valid -> original map is not freed. 
+//This main function will be refactored to map *is_map_valid(int argc, char** argv);
+//When refactored it will return original map char** and all the map related data.

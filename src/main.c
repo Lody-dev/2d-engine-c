@@ -6,7 +6,7 @@
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/02 18:45:48 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/03 11:06:25 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"

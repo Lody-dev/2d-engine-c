@@ -5,7 +5,8 @@ LIBFT	:= ./lib/libft
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
-SRCS	:= $(shell find ./src -iname "main.c")
+#SRCS := $(shell find ./src \( -iname "main.c" -o -iname "open_window.c" \))
+SRCS	:= $(shell find ./src -iname "open_window.c")
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx libft $(NAME)

@@ -12,7 +12,7 @@ void load_textures(t_graphics *textures)
 	textures->textures[1] = mlx_load_png("./textures/tile.png");
 	textures->textures[2] = mlx_load_png("./textures/coin.png");
 	textures->textures[3] = mlx_load_png("./textures/player.png");
-	textures->textures[4] = mlx_load_png("./textures/exit.png");
+	textures->textures[4] = mlx_load_png("./textures/exit1.png");
 	ft_printf("Textures loaded\n");
 }
 
@@ -49,8 +49,24 @@ void render_map(mlx_t *mlx, t_graphics graphics, map data)
 				mlx_image_to_window(mlx, graphics.images[4], x * 64, y * 64);
 		}
 	}	
-	//mlx_image_to_window(mlx, image, x, y)
 }
+
+void free_everything(mlx_t *mlx, t_graphics *graphics, map *data)
+{
+	int i;
+
+	i = -1;
+	while(++i <= 4)
+	{
+		mlx_delete_texture(graphics->textures[i]);
+		mlx_delete_image(mlx, graphics->images[i]);
+	}
+	i = -1;
+	while(++i < data->height)
+		free(data->map[i]);
+	free(data->map);
+}
+
 int32_t	main(int argc, char **argv)
 {
 	static map	data;
@@ -65,7 +81,9 @@ int32_t	main(int argc, char **argv)
 	ttoi(mlx, &graphics);
 	render_map(mlx, graphics, data);
 	mlx_loop(mlx);
+		
 
+	free_everything(mlx, &graphics, &data);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }

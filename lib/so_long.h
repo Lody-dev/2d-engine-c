@@ -18,12 +18,9 @@ typedef struct
 
 typedef struct
 {
-	mlx_texture_t *wall;
-	mlx_texture_t *coin;
-	mlx_texture_t *player;
-	mlx_texture_t *tile;
-	mlx_texture_t *exit;
-}textures_t;
+	mlx_texture_t	*textures[5];
+	mlx_image_t	*images[5];
+}t_graphics;
 
 # include "../src/map_utils.c"
 # include "../src/map_utils_2.c"

@@ -1,5 +1,5 @@
 NAME	:= Game
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g 
 LIBMLX	:= ./lib/MLX42
 LIBFT	:= ./lib/libft
 
@@ -18,10 +18,10 @@ libft:
 	@make -C $(LIBFT)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
+	@cc $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@cc $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
 	@make clean -C $(LIBFT)

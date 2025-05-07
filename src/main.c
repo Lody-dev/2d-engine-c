@@ -3,26 +3,69 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#define T_w 64
+#define T_W 64
 #define T_H 64
 
-static void error(void)
+void load_textures(t_graphics *textures)
 {
-	puts(mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
+	textures->textures[0] = mlx_load_png("./textures/random.png");
+	textures->textures[1] = mlx_load_png("./textures/tile.png");
+	textures->textures[2] = mlx_load_png("./textures/coin.png");
+	textures->textures[3] = mlx_load_png("./textures/player.png");
+	textures->textures[4] = mlx_load_png("./textures/exit.png");
+	ft_printf("Textures loaded\n");
 }
 
+void ttoi(mlx_t *mlx, t_graphics *graphics)
+{
+	graphics->images[0] = mlx_texture_to_image(mlx, graphics->textures[0]);
+	graphics->images[1] = mlx_texture_to_image(mlx, graphics->textures[1]);
+	graphics->images[2] = mlx_texture_to_image(mlx, graphics->textures[2]);
+	graphics->images[3] = mlx_texture_to_image(mlx, graphics->textures[3]);
+	graphics->images[4] = mlx_texture_to_image(mlx, graphics->textures[4]);
+	ft_printf("Images loaded\n");
+}
+
+void render_map(mlx_t *mlx, t_graphics graphics, map data)
+{
+	int y;
+	int x;
+	
+	y = -1;
+	while(++y < data.height)
+	{
+		x = -1;
+		while(++x < data.width)
+		{
+			if(data.map[y][x] == '1')
+				mlx_image_to_window(mlx, graphics.images[0], x * 64, y * 64);
+			if(data.map[y][x] == '0')
+				mlx_image_to_window(mlx, graphics.images[1], x * 64, y * 64);
+			if(data.map[y][x] == 'C')
+				mlx_image_to_window(mlx, graphics.images[2], x * 64, y * 64);
+			if(data.map[y][x] == 'P')
+				mlx_image_to_window(mlx, graphics.images[3], x * 64, y * 64);
+			if(data.map[y][x] == 'E')
+				mlx_image_to_window(mlx, graphics.images[4], x * 64, y * 64);
+		}
+	}	
+	//mlx_image_to_window(mlx, image, x, y)
+}
 int32_t	main(int argc, char **argv)
 {
 	static map	data;
-	textures_t	*textures;	
-	textures = malloc(sizeof(textures_t));
-
+	static t_graphics	graphics;	
+	
 	data = map_validation(argc, argv);
-	mlx_t* mlx = mlx_init(data.width * 64, data.height * 64, "Name", true);
+	mlx_t* mlx = mlx_init((data.width-1) * 64, data.height * 64, "Name", true);
 	if (!mlx)
-        	error();
+        	exit(1);
+	
+	load_textures(&graphics);
+	ttoi(mlx, &graphics);
+	render_map(mlx, graphics, data);
 	mlx_loop(mlx);
+
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }

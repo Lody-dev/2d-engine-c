@@ -67,11 +67,67 @@ void free_everything(mlx_t *mlx, t_graphics *graphics, map *data)
 	free(data->map);
 }
 
+void movement(mlx_key_data_t keydata, void* param)
+{
+	t_wrapper *wrapper = (t_wrapper*)param;
+	map *cords = &wrapper->data;	
+	t_graphics *graphics = &wrapper->graphics;
+	mlx_t *mlx = &wrapper->mlx;
+	
+	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+	{
+		if (cords->map[cords->p_y + 1][cords->p_x] != '1')
+		{
+			cords->map[cords->p_y][cords->p_x] = '0';
+			cords->map[cords->p_y + 1][cords->p_x] = 'P';
+			cords->p_y++;
+		}
+		ft_printf("Cords: Y->%d X->%d\n", cords->p_y, cords->p_x);
+		render_map(mlx, *graphics, *cords);
+	}
+	
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+	{
+		if (cords->map[cords->p_y][cords->p_x - 1] != '1')
+		{
+			cords->map[cords->p_y][cords->p_x] = '0';
+			cords->map[cords->p_y][cords->p_x - 1] = 'P';
+			cords->p_x--;
+		}
+		ft_printf("Cords: Y->%d X->%d\n", cords->p_y, cords->p_x);
+		render_map(mlx, *graphics, *cords);
+	}
+	
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+	{
+		if (cords->map[cords->p_y - 1][cords->p_x] != '1')
+		{
+			cords->map[cords->p_y][cords->p_x] = '0';
+			cords->map[cords->p_y - 1][cords->p_x] = 'P';
+			cords->p_y--;
+		}
+		ft_printf("Cords: Y->%d X->%d\n", cords->p_y, cords->p_x);
+		render_map(mlx, *graphics, *cords);
+	}
+	
+	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+	{
+		if (cords->map[cords->p_y][cords->p_x + 1] != '1')
+		{
+			cords->map[cords->p_y][cords->p_x] = '0';
+			cords->map[cords->p_y][cords->p_x + 1] = 'P';
+			cords->p_x++;
+		}
+		ft_printf("Cords: Y->%d X->%d\n", cords->p_y, cords->p_x);
+		render_map(mlx, *graphics, *cords);
+	}
+}
+
 int32_t	main(int argc, char **argv)
 {
-	static map	data;
-	static t_graphics	graphics;	
-	
+	static	map	data;
+	static	t_graphics	graphics;	
+	static 	t_wrapper	wrapper;	
 	data = map_validation(argc, argv);
 	mlx_t* mlx = mlx_init((data.width-1) * 64, data.height * 64, "Name", true);
 	if (!mlx)
@@ -80,6 +136,12 @@ int32_t	main(int argc, char **argv)
 	load_textures(&graphics);
 	ttoi(mlx, &graphics);
 	render_map(mlx, graphics, data);
+
+	wrapper.data = data;
+	wrapper.graphics = graphics;
+	wrapper.mlx = *mlx;	
+
+	mlx_key_hook(mlx, &movement, &wrapper);
 	mlx_loop(mlx);
 		
 

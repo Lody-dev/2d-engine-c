@@ -22,6 +22,13 @@ typedef struct
 	mlx_image_t	*images[5];
 }t_graphics;
 
+typedef struct
+{
+	map data;
+	t_graphics graphics;
+	mlx_t mlx;	
+}t_wrapper;
+
 # include "../src/map_utils.c"
 # include "../src/map_utils_2.c"
 # include "../src/map_validation.c"

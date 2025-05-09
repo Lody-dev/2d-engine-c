@@ -14,6 +14,7 @@ typedef struct
 	int		p_y;
 	int		cur_exit;
 	int		cur_coins;
+	int		moves;
 }map;
 
 typedef struct

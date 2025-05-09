@@ -6,7 +6,7 @@
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/02 18:34:05 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:13:01 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"
@@ -43,12 +43,18 @@ map	map_read_check(map m, char *name)
 
 int	map_init(map *data)
 {
-	data->map = calloc(1, data->height * sizeof(char *));
+	data->map = ft_calloc(1, data->height * sizeof(char *));
 	if (data->map == NULL)
+	{
+		ft_printf("Map initialization falied :(\n");
 		return (-1);
-	data->map_copy = calloc(1, data->height * sizeof(char *));
+	}
+	data->map_copy = ft_calloc(1, data->height * sizeof(char *));
 	if (data->map_copy == NULL)
+	{	
+		ft_printf("Map copy initialization falied :(\n");
 		return (-1);
+	}
 	return (1);
 }
 
@@ -86,7 +92,19 @@ int	get_map_copy(map *data)
 
 	i = -1;
 	while (++i < data->height)
+	{
 		data->map_copy[i] = ft_strdup(data->map[i]);
+		if(!data->map_copy[i])
+		{
+			while(i < 0)
+			{
+				free(data->map_copy[i]);
+				i--;
+			}
+		ft_printf("Map copying falied\n");
+		return(-1);
+		}
+	}
 	return (1);
 }
 

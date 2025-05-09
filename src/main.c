@@ -107,7 +107,8 @@ void movement(mlx_key_data_t keydata, void* param)
 	if (cords->cur_coins == 0 && cords->cur_exit == 0)
 	{
 		free_everything(mlx, graphics, cords);
-		mlx_terminate(mlx);
+		mlx_close_window(mlx);	
+		return;
 	}
 	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
 		move_to(cords, 1, 0);
@@ -144,5 +145,6 @@ int32_t	main(int argc, char **argv)
 
 	mlx_key_hook(mlx, &movement, &wrapper);
 	mlx_loop(mlx);
+	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validation.c                                   :+:      :+:    :+:   */
+/*   map_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/03 11:27:41 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:25:50 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"
@@ -22,16 +22,22 @@ int	wall_check(map data)
 	while (i < data.width - 1)
 	{
 		if ((data.map[0][i] != '1') || (data.map[data.height - 1][i] != '1'))
+		{
+			ft_printf("Wall check KO!\n");
 			return (-1);
+		}
 		i++;
 	}
 	while (j < data.height - 1)
 	{
 		if (data.map[j][0] != '1' || data.map[j][data.width - 2] != '1')
+		{
+			ft_printf("Wall check KO!\n");
 			return (-1);
+		}
 		j++;
 	}
-	ft_printf("Walls: OK!\n");
+	ft_printf("Wall check OK!\n");
 	return (1);
 }
 
@@ -79,7 +85,6 @@ int	content_check(map *data)
 	}
 	if (data->exit > 1 || data->player > 1 || data->coins < 1)
 		return (-1);
-	ft_printf("Content: OK!\n");
 	return (0);
 }
 

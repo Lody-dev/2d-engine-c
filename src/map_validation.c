@@ -6,7 +6,7 @@
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/09 19:55:41 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:35:44 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"
@@ -31,8 +31,10 @@ map	map_validation(int argc, char **argv)
 	if (get_map_copy(&data) == -1)
 		free_map(&data, -1);
 	if (dfs(&data, data.p_x, data.p_y) == -1)
+	{
+		ft_printf("Imposible to win!\n");
 		free_map(&data, -1);
-	ft_printf("Map valid!\n");
+	}
 	free_map(&data, 0);
 	return (data);
 }

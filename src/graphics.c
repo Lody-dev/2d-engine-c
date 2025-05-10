@@ -1,3 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   graphics.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/10 16:35:13 by viaremko          #+#    #+#             */
+/*   Updated: 2025/05/10 17:23:25 by viaremko         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../lib/MLX42/include/MLX42/MLX42.h"
+#include "../lib/so_long.h"
+
 void	load_textures(t_graphics *textures)
 {
 	textures->textures[0] = mlx_load_png("./textures/random.png");
@@ -16,7 +30,7 @@ void	ttoi(mlx_t *mlx, t_graphics *graphics)
 	graphics->images[4] = mlx_texture_to_image(mlx, graphics->textures[4]);
 }
 
-void	render_map(mlx_t *mlx, t_graphics graphics, map data)
+void	render_map(mlx_t *mlx, t_graphics graphics, t_map data)
 {
 	int	y;
 	int	x;
@@ -50,7 +64,7 @@ void	delete_old_images(mlx_t *mlx, t_graphics *graphics)
 	mlx_delete_image(mlx, graphics->images[4]);
 }
 
-void	free_everything(mlx_t *mlx, t_graphics *graphics, map *data)
+void	free_everything(mlx_t *mlx, t_graphics *graphics, t_map *data)
 {
 	int	i;
 

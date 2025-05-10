@@ -12,7 +12,7 @@
 #include "../lib/libft/libft.h"
 #include "../lib/so_long.h"
 
-int	wall_check(map data)
+int	wall_check(t_map data)
 {
 	int	i;
 	int	j;
@@ -60,7 +60,7 @@ int	extention_check(int argc, char **argv)
 	return (-1);
 }
 
-int	content_check(map *data)
+int	content_check(t_map *data)
 {
 	int	i;
 	int	j;
@@ -88,7 +88,7 @@ int	content_check(map *data)
 	return (0);
 }
 
-void	get_player_position(map *data)
+void	get_player_position(t_map *data)
 {
 	int	i;
 	int	j;
@@ -109,7 +109,7 @@ void	get_player_position(map *data)
 	ft_printf("Player position: X -> %d   Y -> %d\n", data->p_x, data->p_y);
 }
 
-int	dfs(map *data, int x, int y)
+int	dfs(t_map *data, int x, int y)
 {
 	if (x < 0 || y < 0 || data->map_copy[y] == 0 || data->map_copy[y][x] == 0)
 		return (-1);

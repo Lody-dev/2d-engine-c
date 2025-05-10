@@ -12,7 +12,7 @@
 #include "../lib/libft/libft.h"
 #include "../lib/so_long.h"
 
-map	map_read_check(map m, char *name)
+t_map	map_read_check(t_map m, char *name)
 {
 	int		fd;
 	char	*line;
@@ -41,7 +41,7 @@ map	map_read_check(map m, char *name)
 	return (m);
 }
 
-int	map_init(map *data)
+int	map_init(t_map *data)
 {
 	data->map = ft_calloc(1, data->height * sizeof(char *));
 	if (data->map == NULL)
@@ -86,7 +86,7 @@ int	get_map(char **map, char *name)
 	return (1);
 }
 
-int	get_map_copy(map *data)
+int	get_map_copy(t_map *data)
 {
 	int	i;
 
@@ -108,7 +108,7 @@ int	get_map_copy(map *data)
 	return (1);
 }
 
-void	free_map(map *data, int flag)
+void	free_map(t_map *data, int flag)
 {
 	int	i;
 

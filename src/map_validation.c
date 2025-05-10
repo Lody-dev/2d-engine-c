@@ -12,9 +12,9 @@
 #include "../lib/libft/libft.h"
 #include "../lib/so_long.h"
 
-map	map_validation(int argc, char **argv)
+t_map	map_validation(int argc, char **argv)
 {
-	static map	data;
+	static t_map	data;
 
 	if (extention_check(argc, argv) == -1)
 		exit(1);

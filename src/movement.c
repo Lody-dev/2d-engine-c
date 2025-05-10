@@ -1,4 +1,18 @@
-void	move_to(map *cords, int s_y, int s_x)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   movement.c                                         :+:      :+:    :+:   */
+/*                                                     +:+ +:+        +:+     */
+/*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/10 16:35:13 by viaremko          #+#    #+#             */
+/*   Updated: 2025/05/10 17:23:25 by viaremko         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../lib/MLX42/include/MLX42/MLX42.h"
+#include "../lib/so_long.h"
+
+void	move_to(t_map *cords, int s_y, int s_x)
 {
 	int	new_x;
 	int	new_y;
@@ -29,7 +43,7 @@ void	movement(mlx_key_data_t keydata, void *param)
 	if (wrapper->data.cur_coins == 0 && wrapper->data.cur_exit == 0)
 	{
 		free_everything(&wrapper->mlx, &wrapper->graphics, &wrapper->data);
-		return mlx_close_window(&wrapper->mlx);
+		return (mlx_close_window(&wrapper->mlx));
 	}
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(&wrapper->mlx);

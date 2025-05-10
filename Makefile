@@ -1,12 +1,12 @@
-NAME	:= Game
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g 
+NAME	:= so_long
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast 
 LIBMLX	:= ./lib/MLX42
 LIBFT	:= ./lib/libft
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
 #SRCS := $(shell find ./src \( -iname "main.c" -o -iname "open_window.c" \))
-SRCS	:= $(shell find ./src -iname "main.c")
+SRCS	:= $(shell find ./src -iname "*.c")
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx libft $(NAME)
@@ -18,10 +18,10 @@ libft:
 	@make -C $(LIBFT)
 
 %.o: %.c
-	@cc $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
+	@gcc $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
 
 $(NAME): $(OBJS)
-	@cc $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@gcc $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
 	@make clean -C $(LIBFT)

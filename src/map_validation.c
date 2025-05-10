@@ -6,7 +6,7 @@
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/09 20:35:44 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:50:19 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"
@@ -26,7 +26,7 @@ map	map_validation(int argc, char **argv)
 	if (wall_check(data) == -1)
 		free_map(&data, -1);
 	if (content_check(&data) == -1)
-		free_map(&data, -1);
+		free_map(&data, -2);
 	get_player_position(&data);
 	if (get_map_copy(&data) == -1)
 		free_map(&data, -1);

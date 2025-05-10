@@ -6,7 +6,7 @@
 /*   By: viaremko <lodyiaremko@proton.me>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 20:29:32 by viaremko          #+#    #+#             */
-/*   Updated: 2025/05/09 20:13:01 by viaremko         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:50:58 by viaremko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../lib/libft/libft.h"
@@ -51,7 +51,7 @@ int	map_init(map *data)
 	}
 	data->map_copy = ft_calloc(1, data->height * sizeof(char *));
 	if (data->map_copy == NULL)
-	{	
+	{
 		ft_printf("Map copy initialization falied :(\n");
 		return (-1);
 	}
@@ -94,15 +94,15 @@ int	get_map_copy(map *data)
 	while (++i < data->height)
 	{
 		data->map_copy[i] = ft_strdup(data->map[i]);
-		if(!data->map_copy[i])
+		if (!data->map_copy[i])
 		{
-			while(i < 0)
+			while (i < 0)
 			{
 				free(data->map_copy[i]);
 				i--;
 			}
-		ft_printf("Map copying falied\n");
-		return(-1);
+			ft_printf("Map copying falied\n");
+			return (-1);
 		}
 	}
 	return (1);
@@ -123,6 +123,15 @@ void	free_map(map *data, int flag)
 			free(data->map[i]);
 		free(data->map);
 		ft_printf("Error\n");
+		exit(1);
+	}
+	if (flag == -2)
+	{
+		i = -1;
+		while (++i < data->height)
+			free(data->map[i]);
+		free(data->map);
+		ft_printf("Error\nMap content: KO!\n");
 		exit(1);
 	}
 }

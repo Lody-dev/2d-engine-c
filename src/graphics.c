@@ -14,11 +14,11 @@
 
 void	load_textures(t_graphics *textures)
 {
-	textures->textures[0] = mlx_load_png("./textures/random.png");
+	textures->textures[0] = mlx_load_png("./textures/wall.png");
 	textures->textures[1] = mlx_load_png("./textures/tile.png");
 	textures->textures[2] = mlx_load_png("./textures/coin.png");
 	textures->textures[3] = mlx_load_png("./textures/player.png");
-	textures->textures[4] = mlx_load_png("./textures/exit1.png");
+	textures->textures[4] = mlx_load_png("./textures/exit.png");
 }
 
 void	ttoi(mlx_t *mlx, t_graphics *graphics)

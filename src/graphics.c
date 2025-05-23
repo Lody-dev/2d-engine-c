@@ -42,15 +42,15 @@ void	render_map(mlx_t *mlx, t_graphics graphics, t_map data)
 		while (++x < data.width)
 		{
 			if (data.map[y][x] == '1')
-				mlx_image_to_window(mlx, graphics.images[0], x * 64, y * 64);
+				mlx_image_to_window(mlx, graphics.images[0], x * 128, y * 128);
 			if (data.map[y][x] == '0')
-				mlx_image_to_window(mlx, graphics.images[1], x * 64, y * 64);
+				mlx_image_to_window(mlx, graphics.images[1], x * 128, y * 128);
 			if (data.map[y][x] == 'C')
-				mlx_image_to_window(mlx, graphics.images[2], x * 64, y * 64);
+				mlx_image_to_window(mlx, graphics.images[2], x * 128, y * 128);
 			if (data.map[y][x] == 'P')
-				mlx_image_to_window(mlx, graphics.images[3], x * 64, y * 64);
+				mlx_image_to_window(mlx, graphics.images[3], x * 128, y * 128);
 			if (data.map[y][x] == 'E')
-				mlx_image_to_window(mlx, graphics.images[4], x * 64, y * 64);
+				mlx_image_to_window(mlx, graphics.images[4], x * 128, y * 128);
 		}
 	}
 }

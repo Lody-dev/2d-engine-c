@@ -20,7 +20,7 @@ int32_t	main(int argc, char **argv)
 	static t_wrapper	wrapper;
 
 	data = map_validation(argc, argv);
-	mlx = mlx_init((data.width - 1) * 64, data.height * 64, "Game", true);
+	mlx = mlx_init((data.width - 1) * 128, data.height * 128, "Game", true);
 	if (!mlx)
 		exit(1);
 	load_textures(&graphics);

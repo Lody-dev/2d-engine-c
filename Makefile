@@ -1,4 +1,4 @@
-NAME	:= so_long
+NAME	:= 2d-engine-c
 CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 LIBMLX	:= ./lib/MLX42
 LIBFT	:= ./lib/libft

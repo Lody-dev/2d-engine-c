@@ -1,46 +1,62 @@
-# so_long 🐍
+# 2d-engine-c 🕹️
 
-2D game project using MLX42 and libft libraries.  
-This project demonstrates basic graphics programming, game loop mechanics, and user input handling in C.
+A lightweight 2D game engine logic built from scratch in C, demonstrating map parsing, sprite rendering, input handling, and game loop mechanics.
+
+---
 
 ## Features 🚀
 
 - Render 2D graphics with **MLX42** 🖼️
-- Uses custom **libft** 📚 for utility functions
-- Supports keyboard input and basic game logic
-- Compact and efficient C codebase
+- Uses a custom **libft** 📚 for utility functions
+- Handles keyboard input and basic game logic
+- Compact and efficient C codebase for small-scale games
 
-## How  to play 🎯
-Navigate through the map, collect all the coins, and reach the exit to win.
-You can only exit the level after collecting all items.
+---
+
+## How to Play 🎯
+
+Navigate through the map, collect all coins, and reach the exit to win.  
+The level can only be completed after collecting all items.
+
+---
 
 ## Installation 🔧
 
 Clone the repository:
 
-
 ```bash
-git clone git@github.com:Lody-dev/so_long.git
-cd so_long
+git clone git@github.com:Lody-dev/2d-engine-c.git
+cd 2d-engine-c
 ```
+
 Build the project using the provided Makefile:
+
 ```bash
 make
 ```
 
-## Usage▶️
+---
 
-Run the executable:
+## Usage ▶️
+
+Run the executable with a map file:
 
 ```bash
-./so_long maps/map1.ber
+./2d-engine-c maps/map1.ber
 ```
-It will run your binary with map1 that is stored in maps folder.
 
-You can chose any map you want from this list:
+Available maps:
 
 - map1
 - map2
 - map3
 
-## Good luck
+---
+
+## Notes
+- Designed as a **lightweight 2D engine logic**, not a full game.  
+- Focuses on **low-level programming**, memory safety, and modular architecture.
+
+---
+
+Good luck and have fun!

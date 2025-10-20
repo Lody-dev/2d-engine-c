@@ -18,6 +18,8 @@ A lightweight 2D game engine logic built from scratch in C, demonstrating map pa
 Navigate through the map, collect all coins, and reach the exit to win.  
 The level can only be completed after collecting all items.
 
+![Demo](demo.gif)
+
 ---
 
 ## Installation 🔧
